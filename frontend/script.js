@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function botMakeMove() {
-        let move = await fetch('https://20.169.197.31:4567/botMakeMove', {
+        let move = await fetch('http://20.169.197.31:4567/botMakeMove', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -28,7 +28,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function checkGameOver (){
-        let isOver = await fetch('https://20.169.197.31:4567/checkGameOver', {
+        let isOver = await fetch('http://20.169.197.31:4567/checkGameOver', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -41,12 +41,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function startUp() {
-      const message1 = await fetch(`https://20.169.197.31:4567/connect`, {
+      const message1 = await fetch(`http://20.169.197.31:4567/connect`, {
         method:'GET',
         credentials:'include'
       });
       const message1Text = await message1.text();
-      const message2 = await fetch(`https://20.169.197.31:4567/getSessionId`, {
+      const message2 = await fetch(`http://20.169.197.31:4567/getSessionId`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
       });
       const message2Text = await message2.text();
-      const message3 = await fetch(`https://20.169.197.31:4567/creategame?${queryString}`, {
+      const message3 = await fetch(`http://20.169.197.31:4567/creategame?${queryString}`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -121,7 +121,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         squares.forEach((square) => { 
             const className = square.id.slice(-2);
             const img = document.querySelector(`.image.img${className}`);
-            img.src = '/src/main/java/images/space-holder.png';
+            img.src = 'images/space-holder.png';
             img.style.visibility = 'hidden';
             turn = 1;
         });
@@ -160,7 +160,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       img = document.querySelector(`.image.img${className}`);
       console.log(sessionId);
       try {
-        const response = await fetch('https://20.169.197.31:4567/makeMove?position=' + className, {
+        const response = await fetch('http://20.169.197.31:4567/makeMove?position=' + className, {
             method:'GET',
             credentials:'include',
             headers: {
@@ -169,11 +169,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
           .then(response => response.text())
           .then(message => console.log(message))
           .catch(error => console.log('Erorr: ', error));
-        if (img.src.slice(-24) == '/images/space-holder.png') {
+        if (img.src.slice(-24) == 'images/space-holder.png') {
           if (turn % 2 == 0) {
-            img.src = '/src/main/java/images/circle.png';
+            img.src = '/images/circle.png';
           } else {
-            img.src = '/src/main/java/images/cross.png';
+            img.src = '/images/cross.png';
           }
           img.style.visibility = 'visible';
           turn++;
@@ -193,9 +193,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
               img = document.querySelector(`.image.img${botmove}`);
             }
             if (turn % 2 == 0) {
-              img.src = '/src/main/java/images/circle.png';
+              img.src = '/images/circle.png';
             } else {
-              img.src = '/src/main/java/images/cross.png';
+              img.src = '/images/cross.png';
             }
             img.style.visibility = 'visible';
             turn++;
