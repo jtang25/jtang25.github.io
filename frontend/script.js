@@ -108,7 +108,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let newButtonElem = document.querySelector('.new-button');
     newButtonElem.addEventListener('click', () => {
         const squares = document.querySelectorAll('.square');
-        console.log()
         fetch(`https://tangjason.com:4567/clearBoard?${queryString}`, {
             method:'GET',
             credentials:'include',
@@ -121,7 +120,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         squares.forEach((square) => { 
             const className = square.id.slice(-2);
             const img = document.querySelector(`.image.img${className}`);
-            img.src = 'images/space-holder.png';
+            img.src = 'https://jtang25.github.io/images/space-holder.png';
             img.style.visibility = 'hidden';
             turn = 1;
         });
@@ -133,7 +132,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         playerCount++;
         playerCount = (playerCount)%3;
         playerCountButtonElem.innerHTML = parseInt(playerCount) + ' Player';
-        console.log(playerCount);
     });
 
     let difficultyButtonElem = document.querySelector('.difficulty-button');
@@ -156,9 +154,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       waiting=true;
       const className = this.id.slice(-2);
       let img = null;
-      console.log(className);
       img = document.querySelector(`.image.img${className}`);
-      console.log(sessionId);
       try {
         const response = await fetch('https://tangjason.com:4567/makeMove?position=' + className, {
             method:'GET',
@@ -167,15 +163,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 'sessionId': sessionId
             }})
           .then(response => response.text())
-          .then(message => console.log(message))
+          .then(message => message)
           .catch(error => console.log('Erorr: ', error));
-          console.log(img.src);
-        if (img.src == 'images/space-holder.png') {
-          console.log(img.src);
+        if (img.src == 'https://jtang25.github.io/images/space-holder.png') {
           if (turn % 2 == 0) {
-            img.src = 'images/circle.png';
+            img.src = 'https://jtang25.github.io/images/circle.png';
           } else {
-            img.src = 'images/cross.png';
+            img.src = 'https://jtang25.github.io/images/cross.png';
           }
           img.style.visibility = 'visible';
           turn++;
@@ -195,9 +189,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
               img = document.querySelector(`.image.img${botmove}`);
             }
             if (turn % 2 == 0) {
-              img.src = 'images/circle.png';
+              img.src = 'https://jtang25.github.io/images/circle.png';
             } else {
-              img.src = 'images/cross.png';
+              img.src = 'https://jtang25.github.io/images/cross.png';
             }
             img.style.visibility = 'visible';
             turn++;
