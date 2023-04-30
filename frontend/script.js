@@ -169,6 +169,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
           .then(response => response.text())
           .then(message => console.log(message))
           .catch(error => console.log('Erorr: ', error));
+          console.log(img.src);
         if (img.src == 'images/space-holder.png') {
           console.log(img.src);
           if (turn % 2 == 0) {
