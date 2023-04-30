@@ -121,7 +121,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         squares.forEach((square) => { 
             const className = square.id.slice(-2);
             const img = document.querySelector(`.image.img${className}`);
-            img.src = '/src/main/java/images/space-holder.png';
+            img.src = 'images/space-holder.png';
             img.style.visibility = 'hidden';
             turn = 1;
         });
@@ -156,7 +156,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       waiting=true;
       const className = this.id.slice(-2);
       let img = null;
-      console.log(className)
+      console.log(className);
       img = document.querySelector(`.image.img${className}`);
       console.log(sessionId);
       try {
@@ -169,11 +169,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
           .then(response => response.text())
           .then(message => console.log(message))
           .catch(error => console.log('Erorr: ', error));
-        if (img.src.slice(-24) == '/images/space-holder.png') {
+        if (img.src.slice(-24) == 'images/space-holder.png') {
           if (turn % 2 == 0) {
-            img.src = '/src/main/java/images/circle.png';
+            img.src = 'images/circle.png';
           } else {
-            img.src = '/src/main/java/images/cross.png';
+            img.src = 'images/cross.png';
           }
           img.style.visibility = 'visible';
           turn++;
@@ -193,9 +193,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
               img = document.querySelector(`.image.img${botmove}`);
             }
             if (turn % 2 == 0) {
-              img.src = '/src/main/java/images/circle.png';
+              img.src = 'images/circle.png';
             } else {
-              img.src = '/src/main/java/images/cross.png';
+              img.src = 'images/cross.png';
             }
             img.style.visibility = 'visible';
             turn++;
