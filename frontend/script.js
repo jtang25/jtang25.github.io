@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function botMakeMove() {
-        let move = await fetch('https://20.169.197.31:4567/botMakeMove', {
+        let move = await fetch('https://tangjason.com:4567/botMakeMove', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -28,7 +28,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function checkGameOver (){
-        let isOver = await fetch('https://20.169.197.31:4567/checkGameOver', {
+        let isOver = await fetch('https://tangjason.com:4567/checkGameOver', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -41,12 +41,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function startUp() {
-      const message1 = await fetch(`https://20.169.197.31:4567/connect`, {
+      const message1 = await fetch(`https://tangjason.com:4567/connect`, {
         method:'GET',
         credentials:'include'
       });
       const message1Text = await message1.text();
-      const message2 = await fetch(`https://20.169.197.31:4567/getSessionId`, {
+      const message2 = await fetch(`https://tangjason.com:4567/getSessionId`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
       });
       const message2Text = await message2.text();
-      const message3 = await fetch(`https://20.169.197.31:4567/creategame?${queryString}`, {
+      const message3 = await fetch(`https://tangjason.com:4567/creategame?${queryString}`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -109,7 +109,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     newButtonElem.addEventListener('click', () => {
         const squares = document.querySelectorAll('.square');
         console.log()
-        fetch(`https://20.169.197.31:4567/clearBoard?${queryString}`, {
+        fetch(`https://tangjason.com:4567/clearBoard?${queryString}`, {
             method:'GET',
             credentials:'include',
             headers: {
@@ -160,7 +160,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       img = document.querySelector(`.image.img${className}`);
       console.log(sessionId);
       try {
-        const response = await fetch('https://20.169.197.31:4567/makeMove?position=' + className, {
+        const response = await fetch('https://tangjason.com:4567/makeMove?position=' + className, {
             method:'GET',
             credentials:'include',
             headers: {
