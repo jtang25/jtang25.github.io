@@ -157,13 +157,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
       img = document.querySelector(`.image.img${className}`);
       try {
         const response = await fetch('https://tangjason.com:4567/makeMove?position=' + className, {
+            mode: 'cors',
             method:'GET',
             credentials:'include',
             headers: {
                 'sessionId': sessionId
             }})
           .then(response => response.text())
-          .then(message => message)
+          .then(message => console.log(message))
           .catch(error => console.log('Erorr: ', error));
         if (img.src == 'https://jtang25.github.io/images/space-holder.png') {
           if (turn % 2 == 0) {
