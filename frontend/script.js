@@ -169,7 +169,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
           .then(response => response.text())
           .then(message => console.log(message))
           .catch(error => console.log('Erorr: ', error));
-        if (img.src.slice(-24) == 'images/space-holder.png') {
+        if (img.src == 'images/space-holder.png') {
           if (turn % 2 == 0) {
             img.src = 'images/circle.png';
           } else {
