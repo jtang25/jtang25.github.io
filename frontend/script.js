@@ -15,7 +15,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function botMakeMove() {
-        let move = await fetch('https://tangjason.com:4567/botMakeMove', {
+      console.log("botMakeMove");
+        let move = await fetch('https://tangjason.com/botMakeMove', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -28,7 +29,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function checkGameOver (){
-        let isOver = await fetch('https://tangjason.com:4567/checkGameOver', {
+        let isOver = await fetch('https://tangjason.com/checkGameOver', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -41,12 +42,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function startUp() {
-      const message1 = await fetch(`https://tangjason.com:4567/connect`, {
+      const message1 = await fetch(`https://tangjason.com/connect`, {
         method:'GET',
         credentials:'include'
       });
       const message1Text = await message1.text();
-      const message2 = await fetch(`https://tangjason.com:4567/getSessionId`, {
+      const message2 = await fetch(`https://tangjason.com/getSessionId`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -54,7 +55,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
       });
       const message2Text = await message2.text();
-      const message3 = await fetch(`https://tangjason.com:4567/creategame?${queryString}`, {
+      const message3 = await fetch(`https://tangjason.com/creategame?${queryString}`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -84,7 +85,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
       boardSize: 16,
       winLength: 4,
       difficulty: difficultyElem,
-      players: playerCount
+      players: playerCount,
+      maxDepth: 5
     };
     const queryString = new URLSearchParams(params).toString();
     
@@ -108,7 +110,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     let newButtonElem = document.querySelector('.new-button');
     newButtonElem.addEventListener('click', () => {
         const squares = document.querySelectorAll('.square');
-        fetch(`https://tangjason.com:4567/clearBoard?${queryString}`, {
+        gameOver='false';
+        fetch(`https://tangjason.com/clearBoard?${queryString}`, {
             method:'GET',
             credentials:'include',
             headers: {
@@ -124,7 +127,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             img.style.visibility = 'hidden';
             turn = 1;
         });
-        gameOver='false';
     });
 
     let playerCountButtonElem = document.querySelector('.player-button');
@@ -147,6 +149,34 @@ window.addEventListener('DOMContentLoaded', (event) => {
         else {
             difficultyButtonElem.style.fontSize = 14 + difficultyIndex*5 + 'px';
         }
+        const squares = document.querySelectorAll('.square');
+        fetch(`https://tangjason.com/changeDifficulty?newDifficulty=${difficultyElem}`, {
+          method:'GET',
+          credentials:'include',
+          headers: {
+            'sessionId': sessionId
+            }})
+            .then(response => response.text())
+            .then(message => console.log(message))
+            .catch(error => console.log('Erorr: ', error));
+        gameOver='false';
+        fetch(`https://tangjason.com/clearBoard?${queryString}`, {
+            method:'GET',
+            credentials:'include',
+            headers: {
+                'sessionId': sessionId
+            }})
+            .then(response => response.text())
+            .then(message => console.log(message))
+            .catch(error => console.log('Erorr: ', error));
+        squares.forEach((square) => { 
+            const className = square.id.slice(-2);
+            const img = document.querySelector(`.image.img${className}`);
+            img.src = 'https://jtang25.github.io/images/space-holder.png';
+            img.style.visibility = 'hidden';
+            turn = 1;
+        });
+        console.log(difficultyElem);
     });
 
   async function handleClick() {
@@ -156,7 +186,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       let img = null;
       img = document.querySelector(`.image.img${className}`);
       try {
-        const response = await fetch('https://tangjason.com:4567/makeMove?position=' + className, {
+        const response = await fetch('https://tangjason.com/makeMove?position=' + className, {
             mode: 'cors',
             method:'GET',
             credentials:'include',
@@ -164,9 +194,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 'sessionId': sessionId
             }})
           .then(response => response.text())
-          .then(message => console.log(message))
+          .then(message => gameOver = message)
           .catch(error => console.log('Erorr: ', error));
-        if (img.src == 'https://jtang25.github.io/images/space-holder.png') {
+        if (img.src.slice(-('https://jtang25.github.io/images/space-holder.png').length) == 'https://jtang25.github.io/images/space-holder.png') {
           if (turn % 2 == 0) {
             img.src = 'https://jtang25.github.io/images/circle.png';
           } else {
@@ -174,14 +204,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
           }
           img.style.visibility = 'visible';
           turn++;
-          gameOver = await checkGameOver();
-          console.log("Player: "+gameOver);
+          console.log('Game Over '+gameOver);
           if (gameOver=='true') {
             waiting=true;
           } else {
-            await new Promise(r => setTimeout(r, 250));
             let botmove = parseInt(await botMakeMove());
-            console.log(botmove);
             let img = null;
             if(botmove<10){
               img = document.querySelector(`.image.img0${botmove}`);
@@ -197,7 +224,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             img.style.visibility = 'visible';
             turn++;
             gameOver = await checkGameOver();
-            console.log("Bot: "+gameOver);
             waiting=false;
             if(gameOver){
               waiting=true;

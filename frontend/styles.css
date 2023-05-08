@@ -8,6 +8,7 @@ body {
     display: flex;
     justify-content: center;
     margin: 0;
+    border: 1px solid #ffffff;
 }
 
 .title-frame {
@@ -38,6 +39,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
+    border: 1px solid #ffffff;
 }
 
 .button-1 {
@@ -82,6 +84,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid #ffffff;
 }
 
 .board {
