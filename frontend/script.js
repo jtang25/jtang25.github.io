@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     async function botMakeMove() {
       console.log("botMakeMove");
-        let move = await fetch('https://tangjason.com/botMakeMove', {
+        let move = await fetch('https://tangjason.com:4567/botMakeMove', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function checkGameOver (){
-        let isOver = await fetch('https://tangjason.com/checkGameOver', {
+        let isOver = await fetch('https://tangjason.com:4567/checkGameOver', {
             method:'GET',
             credentials:'include',
             headers: {
@@ -42,12 +42,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     async function startUp() {
-      const message1 = await fetch(`https://tangjason.com/connect`, {
+      const message1 = await fetch(`https://tangjason.com:4567/connect`, {
         method:'GET',
         credentials:'include'
       });
       const message1Text = await message1.text();
-      const message2 = await fetch(`https://tangjason.com/getSessionId`, {
+      const message2 = await fetch(`https://tangjason.com:4567/getSessionId`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
       });
       const message2Text = await message2.text();
-      const message3 = await fetch(`https://tangjason.com/creategame?${queryString}`, {
+      const message3 = await fetch(`https://tangjason.com:4567/creategame?${queryString}`, {
         method:'GET',
         credentials:'include',
         headers: {
@@ -111,7 +111,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     newButtonElem.addEventListener('click', () => {
         const squares = document.querySelectorAll('.square');
         gameOver='false';
-        fetch(`https://tangjason.com/clearBoard?${queryString}`, {
+        fetch(`https://tangjason.com:4567/clearBoard?${queryString}`, {
             method:'GET',
             credentials:'include',
             headers: {
@@ -150,7 +150,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             difficultyButtonElem.style.fontSize = 14 + difficultyIndex*5 + 'px';
         }
         const squares = document.querySelectorAll('.square');
-        fetch(`https://tangjason.com/changeDifficulty?newDifficulty=${difficultyElem}`, {
+        fetch(`https://tangjason.com:4567/changeDifficulty?newDifficulty=${difficultyElem}`, {
           method:'GET',
           credentials:'include',
           headers: {
@@ -160,7 +160,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             .then(message => console.log(message))
             .catch(error => console.log('Erorr: ', error));
         gameOver='false';
-        fetch(`https://tangjason.com/clearBoard?${queryString}`, {
+        fetch(`https://tangjason.com:4567/clearBoard?${queryString}`, {
             method:'GET',
             credentials:'include',
             headers: {
@@ -186,7 +186,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       let img = null;
       img = document.querySelector(`.image.img${className}`);
       try {
-        const response = await fetch('https://tangjason.com/makeMove?position=' + className, {
+        const response = await fetch('https://tangjason.com:4567/makeMove?position=' + className, {
             mode: 'cors',
             method:'GET',
             credentials:'include',
